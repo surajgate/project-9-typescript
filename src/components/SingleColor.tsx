@@ -10,21 +10,25 @@ type ColorProps = {
 };
 
 const SingleColor = ({ rgb, weight, index, hexColor }: ColorProps) => {
-  const [alert, setAlert] = useState<boolean>(false);
   const bcg = rgb.join(",");
+  const [isCopied, setIsCopied] = useState(false);
 
-   const handleCopy = () => {
-     const clipboard = new Clipboard(".copy", {
-       text: () => '#'+hexColor,
-     });
-     clipboard.on("success", () => {
-       clipboard.destroy();
-     });
-     clipboard.on("error", () => {
-       clipboard.destroy();
-     });
+  const handleCopy = () => {
+    const clipboard = new Clipboard(".copy", {
+      text: () => "#" + hexColor,
+    });
+    clipboard.on("success", () => {
+       setIsCopied(true);
+      clipboard.destroy();
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 2000);
+    });
+    clipboard.on("error", () => {
+      clipboard.destroy();
+    });
     //  clipboard.onClick({ target: { className: "copy" } });
-   };
+  };
 
   return (
     <>
@@ -42,6 +46,9 @@ const SingleColor = ({ rgb, weight, index, hexColor }: ColorProps) => {
           <Typography className="copy" paragraph>
             #{hexColor}
           </Typography>
+          {isCopied && (
+            <Typography variant="caption">Copied to clipboard!</Typography>
+          )}
         </Box>
       </Container>
     </>
