@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Tooltip, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import Clipboard from "clipboard";
 
@@ -39,15 +39,20 @@ const SingleColor = ({ rgb, weight, index, hexColor }: ColorProps) => {
           color: `${index > 10 ? "white" : "black"}`,
         }}
       >
-        <Typography sx={{ alignItems: "center", p: 2 }} paragraph>
+        <Typography
+          sx={{ alignItems: "center", p: 2, cursor: "pointer" }}
+          paragraph
+        >
           {weight}%
         </Typography>
         <Box onClick={handleCopy}>
-          <Typography className="copy" paragraph>
-            #{hexColor}
-          </Typography>
+          <Tooltip title={'Click to Copy'}>
+            <Typography className="copy" paragraph sx={{ cursor: "pointer" }}>
+              #{hexColor}
+            </Typography>
+          </Tooltip>
           {isCopied && (
-            <Typography variant="caption">Copied to clipboard!</Typography>
+            <Typography variant="caption">Copied to Clipboard !</Typography>
           )}
         </Box>
       </Container>
